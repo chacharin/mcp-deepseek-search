@@ -344,29 +344,6 @@ curl -s "http://localhost:8807/usage?since=$(date -d today +%s)" | python -c "im
 
 ดู log ของ server ได้ด้วย `docker compose logs -f`
 
-## พัฒนาต่อ
-
-```bash
-uv sync
-```
-
-```bash
-uv run pytest -q
-```
-
-เทสต์ใช้ DeepSeek API จำลอง จึงไม่ต้องมี key และไม่เสียเงิน
-
-| ไฟล์ | เนื้อหา |
-|---|---|
-| `app/config.py` | อ่านการตั้งค่าจาก environment และสวิตช์เครื่องมือ |
-| `app/deepseek.py` | เรียก DeepSeek API ลองใหม่ สร้าง operator และจัดรูปข้อความ |
-| `app/server.py` | เครื่องมือ MCP, `/health`, `/usage` และการตรวจ token |
-| `app/usage.py` | บันทึกการใช้งาน (JSON Lines) |
-| `tests/` | เทสต์กับ API จำลอง |
-
-ถ้าต้องการเปลี่ยนข้อความที่เอเจนต์อ่าน ให้แก้ `format_results` และ `format_page` ใน `app/deepseek.py`
-ถ้าต้องการเปลี่ยนคำอธิบายเครื่องมือที่เอเจนต์เห็น ให้แก้ `SEARCH_DESCRIPTION`, `FETCH_DESCRIPTION` และคำอธิบายพารามิเตอร์ใน `app/server.py`
-
 ## License
 
 MIT · DeepSeek เป็นเครื่องหมายการค้าของเจ้าของ โครงการนี้ไม่ได้เกี่ยวข้องกับ DeepSeek
