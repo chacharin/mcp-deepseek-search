@@ -87,7 +87,7 @@ async def deepseek_search(
     count: Annotated[int, Field(description="จำนวนผลลัพธ์ 1–50", ge=1, le=50)] = S.default_count,
     sites: Annotated[list[str], Field(description="ค้นเฉพาะเว็บไซต์เหล่านี้ เช่น [\"thaigov.go.th\"]")] = [],
     exclude_sites: Annotated[list[str], Field(description="ตัดเว็บไซต์เหล่านี้ออกจากผลลัพธ์")] = [],
-    language: Annotated[str, Field(description="จำกัดภาษาของผลลัพธ์ เช่น \"th\" หรือ \"th,en\"")] = "",
+    language: Annotated[str, Field(description="จำกัดภาษาของผลลัพธ์ เช่น \"th\" หรือ \"th,en\" เว้นว่าง = ไม่จำกัดภาษา (ค่าเริ่มต้น)")] = "",
     recency: Annotated[Literal["", "day", "week", "month", "year"], Field(
         description="จำกัดเฉพาะที่เผยแพร่ภายในช่วงล่าสุด: day, week, month, year")] = "",
     after: Annotated[str, Field(description="เผยแพร่หลังวันที่ (YYYY หรือ YYYY-MM-DD)")] = "",
