@@ -1,0 +1,28 @@
+# mcp-deepseek-search
+# - MCP endpoint http://mcp-deepseek-search:8000/mcp for agents on the same docker network
+#   (${DOCKER_NETWORK}, default agent_network - create it once: docker network create agent_network)
+# - publishes on ${PUBLISH_ADDR}:${PUBLISH_PORT} (default 0.0.0.0:8807 = reachable from other machines);
+#   set MCP_AUTH_TOKEN in .env so callers must present a token
+# - one volume: the usage log (cost and timings of every DeepSeek call), read back through GET /usage
+# Every ${…} below is set in .env; the defaults here are generic, not tied to any one deployment.
+services:
+  mcp-deepseek-search:
+    build: .
+    image: mcp-deepseek-search:dev
+    container_name: mcp-deepseek-search
+    env_file: .env
+    ports:
+      - "${PUBLISH_ADDR:-0.0.0.0}:${PUBLISH_PORT:-8807}:8000"
+    volumes:
+      - "usage:/app/usage"
+    networks:
+      - agent_network
+    restart: unless-stopped
+
+volumes:
+  usage:
+
+networks:
+  agent_network:
+    external: true
+    name: ${DOCKER_NETWORK:-agent_network}
